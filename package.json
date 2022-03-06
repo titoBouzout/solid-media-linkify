@@ -1,0 +1,85 @@
+{
+	"name": "solid-media-linkify",
+	"version": "0.0.0",
+	"description": "Given a string it returns links, images, videos, audio as tags and also emojis like :duck: as 🦆.",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/titoBouzout/solid-media-linkify.git"
+	},
+	"keywords": [
+		"solidjs",
+		"solid",
+		"link",
+		"linkify",
+		"video",
+		"image",
+		"gif",
+		"audio",
+		"voice",
+		"record",
+	],
+	"author": "Tito Bouzout",
+	"license": "GPL",
+	"bugs": {
+		"url": "https://github.com/titoBouzout/solid-media-linkify/issues"
+	},
+	"homepage": "https://github.com/titoBouzout/solid-media-linkify#readme",
+	"prettier": {
+		"printWidth": 100,
+		"useTabs": true,
+		"semi": false,
+		"singleQuote": true,
+		"jsxSingleQuote": false,
+		"trailingComma": "all",
+		"bracketSpacing": true,
+		"jsxBracketSameLine": false,
+		"arrowParens": "avoid",
+		"quoteProps": "preserve",
+		"proseWrap": "preserve"
+	},
+	"eslintConfig": {
+		"env": {
+			"browser": true,
+			"node": true,
+			"es6": true
+		},
+		"parser": "babel-eslint",
+		"extends": "eslint:recommended",
+		"parserOptions": {
+			"ecmaFeatures": {
+				"experimentalObjectRestSpread": true,
+				"jsx": true,
+				"impliedStrict": true,
+				"es6": true
+			},
+			"es6": true,
+			"ecmaVersion": 6,
+			"sourceType": "module",
+			"allowImportExportEverywhere": false,
+			"codeFrame": false
+		},
+		"plugins": ["react"],
+		"rules": {
+			"comma-dangle": "off",
+			"indent": "off",
+			"linebreak-style": ["error", "unix"],
+			"no-cond-assign": "off",
+			"no-console": "off",
+			"no-empty": "off",
+			"no-extra-boolean-cast": "off",
+			"no-extra-semi": "off",
+			"no-fallthrough": "off",
+			"no-func-assign": "off",
+			"no-inner-declarations": "off",
+			"no-mixed-spaces-and-tabs": "off",
+			"no-redeclare": "off",
+			"no-tabs": "off",
+			"no-undef": "off",
+			"no-global-assign": "off",
+			"no-unreachable": "off",
+			"no-unused-vars": "off",
+			"strict": "off"
+		}
+	}
+}
