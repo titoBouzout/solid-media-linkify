@@ -5,7 +5,7 @@ export default function Link(props) {
 			title={props.url}
 			alt={props.url}
 			target={
-				props.url.indexOf(window.location.protocol && '//' + window.location.host + '/') !== 0
+				props.url.indexOf(window.location.protocol + '//' + window.location.host + '/') !== 0
 					? '_blank'
 					: ''
 			}
