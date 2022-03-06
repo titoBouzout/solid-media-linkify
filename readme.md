@@ -54,14 +54,18 @@ Splits the text in white-spaces and then checks for http, https or blob to creat
 ## Caveats
 
 - Look at the source code, there's a big RegExp and a big JSON for the emojis functionality.
-- As this code is used mostly in chats, the matching is weak on purpose to give the best experience. Consider this link `https://media.tenor.com/videos/024630f433c58cba878a57a98b69337f/mp4` They don't use pronunciation before the extension...
+- As this code is used mostly in chats, the matching is weak on purpose to give the best experience. Consider this link `https://media.tenor.com/videos/024630f433c58cba878a57a98b69337f/mp4` They don't use punctuation before the extension...
 
 ## TODO
 
 As is, does the job on my sites. Possibly new functionalities.
 
 - custom formatters for special cases
--
+- inspiration could be taken from https://linkify.js.org/
+
+## Alternatives
+
+?
 
 ## Author
 
