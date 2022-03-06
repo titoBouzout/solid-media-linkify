@@ -1,31 +1,31 @@
 # Solid Media Linkify
 
-Given a string it returns links, images, videos, audio as tags and also emojis like :duck: as 🦆.
+Given a string it returns links, images, videos, audio as tags and also emojis like `:duck:` as 🦆.
 
 ## Usage
-
 
 ```jsx
 import Linkify from 'solid-media-linkify'
 
 export default function YourComponent() {
 	return (
-		<Linkify text={`
-			 becomes a link tag https://example.net/
-			 becomes an image tag https://example.net/image.(png|apng|jpg|jpeg|gif|svg|webp)
-			 becomes an audio tag https://example.net/audio.(wav|mp3|m4a|ogg|oga)
-			 becomes an video tag https://example.net/video.(webm|mp4|mpg|ogv)
-			 :duck: becomes 🦆
-		`}
-		scroll={()=>{
-			console.log(`
+		<Linkify
+			text={`
+				 becomes a link tag https://example.net/
+				 becomes an image tag https://example.net/image.(png|apng|jpg|jpeg|gif|svg|webp)
+				 becomes an audio tag https://example.net/audio.(wav|mp3|m4a|ogg|oga)
+				 becomes an video tag https://example.net/video.(webm|mp4|mpg|ogv)
+				 :duck: becomes 🦆
+			`}
+			scroll={() => {
+				console.log(`
 				if you need to scroll something
 				after a image/audio/video loads
-				you can use this`
-			)}
-		}
-		mark="will"/>
- 	)
+				you can use this`)
+			}}
+			mark="will"
+		/>
+	)
 }
 ```
 
