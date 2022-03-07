@@ -15,13 +15,14 @@ export default function YourComponent() {
 				 becomes an image tag https://example.net/image.(png|apng|jpg|jpeg|gif|svg|webp)
 				 becomes an audio tag https://example.net/audio.(wav|mp3|m4a|ogg|oga|opus)
 				 becomes an video tag https://example.net/video.(webm|mp4|mpg|ogv)
-				 :duck: becomes 🦆
+				 :duck: becomes 🦆 QUACK!
 			`}
 			scroll={() => {
 				console.log(`
-				if you need to scroll something
-				after a image/audio/video loads
-				you can use this`)
+					if you need to scroll something
+					after a image/audio/video loads
+					you can use this
+				`)
 			}}
 			mark="will"
 		/>
@@ -55,11 +56,17 @@ Splits the text in white-spaces and then checks for http or https to create the 
 
 - Look at the source code, there's a big RegExp and a big JSON for the emojis functionality.
 - As this code is used mostly in chats, the matching is weak on purpose to give the best experience. Consider this link `https://media.tenor.com/videos/024630f433c58cba878a57a98b69337f/mp4` They don't use punctuation before the extension...
-- There's a hacky portion of code to be able to display blob URLs, I will have to figure out how to solve this some day.
 
 ## TODO
 
-As is, does the job on my sites. Possibly new functionalities.
+As is, does the job on my sites. However, there some pending stuff
+
+- There's a hacky portion of code to be able to display data: as blob:, I will have to figure out how to solve this.
+- some images dont give any indication that these are images(apply to videos, audio, whatever), we need to look into the content type of the links, we have to do a request.
+- an option to decode html entities. Some websites/apis(hi youtube) do a very poor job at escaping so they spit escaped data and code ends being escaped more than once.
+- Give the optino to format the text content of links, would be nice to replace domain for favicons in some situations, etc
+
+Possibly new functionalities.
 
 - custom formatters for special cases
 - inspiration could be taken from https://linkify.js.org/
