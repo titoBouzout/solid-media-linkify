@@ -11,6 +11,7 @@ export default function Linkify(props) {
 		.split(/(\s+)/)
 
 	let scroll = props.scroll || noop
+	let mark = props.mark || ''
 
 	for (let i = 0, l = s.length; i < l; i++) {
 		isEmoji.lastIndex = 0
@@ -22,7 +23,7 @@ export default function Linkify(props) {
 			s[i] != 'blob'
 		) {
 			s[i] = <Media url={s[i]} scroll={scroll} />
-		} else if (props.mark.toLowerCase() === s[i].toLowerCase()) {
+		} else if (mark.toLowerCase() === s[i].toLowerCase()) {
 			s[i] = <mark>{s[i]}</mark>
 		} else if (Emoji[s[i]]) {
 			// :duck: to <span class="emoji-native">🦆</span>

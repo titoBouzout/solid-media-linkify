@@ -39,13 +39,13 @@ or
 
 ## How it works?
 
-Splits the text in white-spaces and then checks for http, https or blob to create the Tags. There's no injection, these are real tags without any risky innerHTML.
+Splits the text in white-spaces and then checks for http or https to create the Tags. There's no injection, these are real tags without any risky innerHTML.
 
 ## Functionality
 
 - Emojis are wrapped in as `<span class="emoji-native">🦆</span>` in case you want to display them bigger.
 - You may pass a `scroll` prop function, to be able to scroll(a chat?) after an image/video/audio finishes loading.
-- You may pass a `mark` text. `mark="Tito"` will become `<mark>Tito</mark>`
+- You may pass a `mark` text. `mark="Tito"` will become `<mark>Tito</mark>`, it's case insensitive
 - srcs contain `crossorigin="crossorigin"`
 - links contain `rel="noopener"`
 - external links open in `_blank`
@@ -55,6 +55,7 @@ Splits the text in white-spaces and then checks for http, https or blob to creat
 
 - Look at the source code, there's a big RegExp and a big JSON for the emojis functionality.
 - As this code is used mostly in chats, the matching is weak on purpose to give the best experience. Consider this link `https://media.tenor.com/videos/024630f433c58cba878a57a98b69337f/mp4` They don't use punctuation before the extension...
+- There's a hacky portion of code to be able to display blob URLs, I will have to figure out how to solve this some day.
 
 ## TODO
 
