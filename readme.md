@@ -65,6 +65,9 @@ As is, does the job on my sites. However, there some pending stuff
 - some images dont give any indication that these are images(apply to videos, audio, whatever), we need to look into the content type of the links, we have to do a request.
 - an option to decode html entities. Some websites/apis(hi youtube) do a very poor job at escaping so they spit escaped data and code ends being escaped more than once.
 - Give the optino to format the text content of links, would be nice to replace domain for favicons in some situations, etc
+- remove from the typed emojis json the ones that users are not going to likely type, maybe idk
+- add bold/italic/spoiler etc
+- allow to extend the emoji with images, like `:tito:`
 
 Possibly new functionalities.
 
