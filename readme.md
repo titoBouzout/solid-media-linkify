@@ -2,6 +2,8 @@
 
 Given a string it returns links, images, videos, audio as tags and also emojis like `:duck:` as 🦆.
 
+A Solid component. See https://www.solidjs.com/
+
 ## Usage
 
 ```jsx
