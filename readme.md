@@ -13,7 +13,7 @@ export default function YourComponent() {
 			text={`
 				 becomes a link tag https://example.net/
 				 becomes an image tag https://example.net/image.(png|apng|jpg|jpeg|gif|svg|webp)
-				 becomes an audio tag https://example.net/audio.(wav|mp3|m4a|ogg|oga)
+				 becomes an audio tag https://example.net/audio.(wav|mp3|m4a|ogg|oga|opus)
 				 becomes an video tag https://example.net/video.(webm|mp4|mpg|ogv)
 				 :duck: becomes 🦆
 			`}
