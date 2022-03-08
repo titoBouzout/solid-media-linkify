@@ -3,9 +3,22 @@ import Emoji from './emoji.json'
 import isEmoji from './isEmoji.js'
 
 const noop = () => {}
+const separator = /(\s+)/
 
 export default function Linkify(props) {
-	let s = (props.text || '').trim().split(/(\s+)/)
+	let s = []
+
+	if (props.text) {
+		s = (props.text || '').trim().split(separator)
+	} else {
+		;(props.children || []).forEach(item => {
+			if (typeof item === 'string') {
+				s.push(...item.split(separator))
+			} else {
+				s.push(item)
+			}
+		})
+	}
 
 	let scroll = props.scroll || noop
 	let mark = props.mark || false
@@ -14,7 +27,9 @@ export default function Linkify(props) {
 	for (let i = 0, l = s.length; i < l; i++) {
 		isEmoji.lastIndex = 0
 
-		if (Emoji[s[i]]) {
+		if (typeof s[i] !== 'string') {
+			nodes.push(s[i])
+		} else if (Emoji[s[i]]) {
 			// :duck: to <span class="emoji-native">🦆</span>
 			// 🦆 to <span class="emoji-native">🦆</span>
 			nodes.push(<span class="emoji-native">{Emoji[s[i]]}</span>)
