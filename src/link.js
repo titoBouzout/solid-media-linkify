@@ -1,7 +1,8 @@
+let clean = /[\.,"]$/
 export default function Link(props) {
 	return (
 		<a
-			href={props.url}
+			href={props.url.replace(clean, '')}
 			title={props.url}
 			alt={props.url}
 			target={
