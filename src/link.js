@@ -1,5 +1,6 @@
 let clean = /[\.,"]$/
 let num = 0
+
 export default function Link(props) {
 	return (
 		<a
