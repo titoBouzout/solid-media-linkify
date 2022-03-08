@@ -1,4 +1,5 @@
 let clean = /[\.,"]$/
+let num = 0
 export default function Link(props) {
 	return (
 		<a
@@ -7,7 +8,7 @@ export default function Link(props) {
 			alt={props.url}
 			target={
 				props.url.indexOf(window.location.protocol + '//' + window.location.host + '/') !== 0
-					? '_blank'
+					? '_blank' + num++
 					: ''
 			}
 			rel="noopener"
