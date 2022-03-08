@@ -7,7 +7,7 @@ export default function Video(props) {
 		<Link url={props.url}>
 			<video
 				loop
-				autoPlay
+				autoplay
 				muted
 				src={props.url.replace(clean, '')}
 				alt={props.url}

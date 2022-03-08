@@ -1,7 +1,7 @@
-import Video from './video.js'
-import Audio from './audio.js'
-import Image from './image.js'
-import Link from './link.js'
+import Video from './media/video.js'
+import Audio from './media/audio.js'
+import Image from './media/image.js'
+import Link from './media/link.js'
 
 export default function Media(props) {
 	if (/data:video\/(webm|mp4|mpg|ogv);base64/.test(props.url)) {
