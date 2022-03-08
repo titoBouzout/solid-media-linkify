@@ -1,6 +1,6 @@
-import Link from './link.js'
+import { cleanLink } from './util'
 
-let clean = /[\.,"]$/
+import Link from './link.js'
 
 export default function Video(props) {
 	return (
@@ -9,13 +9,13 @@ export default function Video(props) {
 				loop
 				autoplay
 				muted
-				src={props.url.replace(clean, '')}
+				src={props.url.replace(cleanLink, '')}
 				alt={props.url}
 				title={props.url}
 				oncanplay={props.scroll}
 				crossorigin="crossorigin"
 			>
-				<source src={props.url.replace(clean, '')} crossorigin="crossorigin" />
+				<source src={props.url.replace(cleanLink, '')} crossorigin="crossorigin" />
 			</video>
 		</Link>
 	)

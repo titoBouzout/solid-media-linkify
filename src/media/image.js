@@ -1,12 +1,12 @@
-import Link from './link.js'
+import { cleanLink } from './util'
 
-let clean = /[\.,"]$/
+import Link from './link.js'
 
 export default function Image(props) {
 	return (
 		<Link url={props.url}>
 			<img
-				src={props.url.replace(clean, '')}
+				src={props.url.replace(cleanLink, '')}
 				alt={props.url}
 				title={props.url}
 				onload={props.scroll}
