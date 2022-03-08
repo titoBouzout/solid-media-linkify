@@ -6,6 +6,10 @@ const noop = () => {}
 const separator = /(\s+)/
 
 export default function Linkify(props) {
+	let scroll = props.scroll || noop
+	let mark = props.mark || false
+	let nodes = []
+
 	let s = []
 
 	if (props.text) {
@@ -19,10 +23,6 @@ export default function Linkify(props) {
 			}
 		})
 	}
-
-	let scroll = props.scroll || noop
-	let mark = props.mark || false
-	let nodes = []
 
 	for (let i = 0, l = s.length; i < l; i++) {
 		isEmoji.lastIndex = 0
