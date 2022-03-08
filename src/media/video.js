@@ -4,7 +4,7 @@ import Link from './link.js'
 
 export default function Video(props) {
 	return (
-		<Link url={props.url}>
+		<Link url={props.url} blank>
 			<video
 				loop
 				autoplay

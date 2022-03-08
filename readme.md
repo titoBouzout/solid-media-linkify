@@ -64,6 +64,8 @@ Splits the text in white-spaces and then checks for http or https to create the 
 - allow to use `children` as the input instead of the prop `text`
 - clean ",. from the end of links and embeds
 - open links always in new tabs by adding a number to `target="_blank0"`
+- always open internal images and videos links on new tabs
+- target should be null not an empty string when not in use
 
 ## TODO
 

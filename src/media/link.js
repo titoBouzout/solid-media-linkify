@@ -9,9 +9,10 @@ export default function Link(props) {
 			title={props.url}
 			alt={props.url}
 			target={
+				props.blank ||
 				props.url.indexOf(window.location.protocol + '//' + window.location.host + '/') !== 0
 					? '_blank' + num++
-					: ''
+					: null
 			}
 			rel="noopener"
 		>

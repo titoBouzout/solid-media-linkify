@@ -10,3 +10,5 @@ git commit -m "update version"
 git push --all --prune
 
 call npm publish
+
+exit
