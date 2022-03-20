@@ -7,7 +7,7 @@ const separator = /(\s+)/
 
 export default function Linkify(props) {
 	let scroll = props.scroll || noop
-	let mark = props.mark || false
+	let mark = props.mark ? props.mark.toLowerCase() : false
 	let nodes = []
 
 	let s = []
@@ -44,7 +44,7 @@ export default function Linkify(props) {
 			s[i] != 'data:'
 		) {
 			nodes.push(<Media url={s[i]} scroll={scroll} />)
-		} else if (mark !== false && mark.toLowerCase() === s[i].toLowerCase()) {
+		} else if (mark !== false && mark === s[i].toLowerCase()) {
 			nodes.push(<mark>{s[i]}</mark>)
 		} else if (!/[a-z0-9&*#]/i.test(s[i]) && isEmoji.test(s[i])) {
 			// _unkown emoji_ to <span class="emoji-native">_unkown emoji_</span>

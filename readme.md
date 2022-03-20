@@ -49,7 +49,7 @@ Splits the text in white-spaces and then checks for http or https to create the 
 - Emojis are wrapped in as `<span class="emoji-native">🦆</span>` in case you want to display them bigger.
 - You may pass a `scroll` prop function, to be able to scroll(a chat?) after an image/video/audio finishes loading.
 - You may pass a `mark` text. `mark={["Tito"]}` will become `<mark>Tito</mark>`, it's case insensitive
-- srcs contain `crossorigin="crossorigin"`
+- srcs contain `crossorigin`
 - links contain `rel="noopener"`
 - external links open in `_blank`
 - `alt` and `title` contain the URL

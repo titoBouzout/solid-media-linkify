@@ -13,9 +13,9 @@ export default function Video(props) {
 				alt={props.url}
 				title={props.url}
 				oncanplay={props.scroll}
-				crossorigin="crossorigin"
+				crossorigin
 			>
-				<source src={props.url.replace(cleanLink, '')} crossorigin="crossorigin" />
+				<source src={props.url.replace(cleanLink, '')} crossorigin />
 			</video>
 		</Link>
 	)
