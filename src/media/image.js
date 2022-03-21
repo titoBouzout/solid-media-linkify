@@ -10,7 +10,6 @@ export default function Image(props) {
 				alt={props.url}
 				title={props.url}
 				onload={props.scroll}
-				crossorigin
 			/>
 		</Link>
 	)

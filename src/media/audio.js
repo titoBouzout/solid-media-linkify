@@ -8,9 +8,8 @@ export default function Audio(props) {
 			alt={props.url}
 			title={props.url}
 			oncanplay={props.scroll}
-			crossorigin
 		>
-			<source src={props.url.replace(cleanLink, '')} crossorigin />
+			<source src={props.url.replace(cleanLink, '')} />
 		</audio>
 	)
 }
