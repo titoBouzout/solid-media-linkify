@@ -12,8 +12,8 @@ export default function Linkify(props) {
 
 	let s = []
 
-	if (props.text) {
-		s = (props.text || '').trim().split(separator)
+	if (typeof props.children === 'string') {
+		s = (props.children || '').trim().split(separator)
 	} else {
 		;(props.children || []).forEach(item => {
 			if (typeof item === 'string') {
