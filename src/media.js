@@ -18,15 +18,18 @@ function toObjectURL(url) {
 
 export default function Media(props) {
 	let url = props.url
-	if (/data:video\/(webm|mp4|mpg|ogv);base64/.test(url)) {
+	if (/^data:video\/(webm|mp4|mpg|ogv);base64/.test(url)) {
 		let link = toObjectURL(url)
 		return <Video url={link.url} scroll={props.scroll} />
-	} else if (/data:audio\/(wav|mp3|m4a|ogg|oga|opus);base64/.test(url)) {
+	} else if (/^data:audio\/(wav|mp3|m4a|ogg|oga|opus);base64/.test(url)) {
 		let link = toObjectURL(url)
 		return <Audio url={link.url} scroll={props.scroll} />
-	} else if (/data:image\/(png|apng|jpg|jpeg|gif|svg|webp);base64/.test(url)) {
+	} else if (/^data:image\/(png|apng|jpg|jpeg|gif|svg|webp);base64/.test(url)) {
 		let link = toObjectURL(url)
 		return <Image url={link.url} scroll={props.scroll} />
+	} else if (/^data:/.test(url)) {
+		let link = toObjectURL(url)
+		return <Link url={link.url} />
 	} else if (/[\.\/](webm|mp4|mpg|ogv)/gi.test(url)) {
 		return <Video url={url} scroll={props.scroll} />
 	} else if (/[\.\/](wav|mp3|m4a|ogg|oga|opus)/gi.test(url)) {
