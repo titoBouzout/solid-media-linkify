@@ -48,7 +48,7 @@ Splits the text in white-spaces and then checks for http or https to create the 
 
 - Emojis are wrapped in as `<span class="emoji-native">🦆</span>` in case you want to display them bigger.
 - You may pass a `scroll` prop function, to be able to scroll(a chat?) after an image/video/audio finishes loading.
-- You may pass a `mark` text. `mark={["Tito"]}` will become `<mark>Tito</mark>`, it's case insensitive
+- You may pass a `mark` text. `mark={"Tito"}` will become `<mark>Tito</mark>`, it's case insensitive
 - links contain `rel="noopener"`
 - external links open in `_blank`
 - `alt` and `title` contain the URL
@@ -70,7 +70,6 @@ Splits the text in white-spaces and then checks for http or https to create the 
 
 As is, does the job on my sites. However, there some pending stuff
 
-- There's a hacky portion of code to be able to display data: as blob:, I will have to figure out how to solve this.
 - some images don't give any indication that these are images(apply to videos, audio, whatever), we need to look into the content type of the links, we have to do a request.
 - an option to decode html entities. Some websites/apis(hi youtube) do a very poor job at escaping so they spit escaped data and code ends being escaped more than once.
 - Give the option to format the text content of links, would be nice to replace domain for favicons in some situations, etc
