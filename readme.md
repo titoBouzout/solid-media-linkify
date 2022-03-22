@@ -60,6 +60,7 @@ Splits the text in white-spaces and then checks for http/https/data to create th
 - clean ",. from the end of links and embeds
 - always open internal images and videos links on new tabs
 - converts data urls to blob urls
+- some images/videos/adios don't give any indication of what they are in the url, we do a HEAD request to try to figure it out.
 
 ## Caveats
 
@@ -70,13 +71,13 @@ Splits the text in white-spaces and then checks for http/https/data to create th
 
 As is, does the job on my sites. However, there some pending stuff
 
-- some images don't give any indication that these are images(apply to videos, audio, whatever), we need to look into the content type of the links, we have to do a request.
 - an option to decode html entities. Some websites/apis(hi youtube) do a very poor job at escaping so they spit escaped data and code ends being escaped more than once.
 - Give the option to format the text content of links, would be nice to replace domain for favicons in some situations
 - remove from the typed emojis json the ones that users are not going to likely type, maybe idk
 - add bold/italic/spoiler/quotes etc
 - allow to extend the emoji with images, like `:tito:` to become something else
 - allow mark to be an array
+- may do children recursive
 
 Possibly new functionalities.
 

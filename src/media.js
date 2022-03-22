@@ -12,8 +12,15 @@ function toObjectURL(url) {
 		.then(blob => {
 			link.url = URL.createObjectURL(blob)
 		})
-
 	return link
+}
+
+async function toMediaLink(url, link, scroll) {
+	try {
+		let res = await fetch(url, { method: 'HEAD' })
+		let contentType = res.headers.get('Content-Type')
+		link.url = <Media url={url} scroll={scroll} type={contentType} />
+	} catch (e) {}
 }
 
 export default function Media(props) {
@@ -30,13 +37,19 @@ export default function Media(props) {
 	} else if (/^data:/.test(url)) {
 		let link = toObjectURL(url)
 		return <Link url={link.url} />
-	} else if (/[\.\/](webm|mp4|mpg|ogv)/gi.test(url)) {
+	} else if (/[\.\/](webm|mp4|mpg|ogv)/gi.test(props.type || url)) {
 		return <Video url={url} scroll={props.scroll} />
-	} else if (/[\.\/](wav|mp3|m4a|ogg|oga|opus)/gi.test(url)) {
+	} else if (/[\.\/](wav|mp3|m4a|ogg|oga|opus)/gi.test(props.type || url)) {
 		return <Audio url={url} scroll={props.scroll} />
-	} else if (/[\.\/](png|apng|jpg|jpeg|gif|svg|webp)/gi.test(url)) {
+	} else if (/[\.\/](png|apng|jpg|jpeg|gif|svg|webp)/gi.test(props.type || url)) {
 		return <Image url={url} scroll={props.scroll} />
+	} else if (props.type) {
+		// if type is set, then we already tried to figure out the type, do nothing
 	} else {
-		return <Link url={url} />
+		// try to guess the type
+		let link = createMutable({ url })
+		link.url = <Link url={url} />
+		toMediaLink(url, link, props.scroll)
+		return () => link.url
 	}
 }
