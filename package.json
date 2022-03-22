@@ -1,6 +1,6 @@
 {
 	"name": "solid-media-linkify",
-	"version": "1.15.0",
+	"version": "1.16.0",
 	"description": "Given a string it returns links, images, videos, audio as tags and also emojis like :duck: as 🦆.",
 	"main": "index.js",
 	"repository": {
@@ -59,11 +59,16 @@
 			"allowImportExportEverywhere": false,
 			"codeFrame": false
 		},
-		"plugins": ["react"],
+		"plugins": [
+			"react"
+		],
 		"rules": {
 			"comma-dangle": "off",
 			"indent": "off",
-			"linebreak-style": ["error", "unix"],
+			"linebreak-style": [
+				"error",
+				"unix"
+			],
 			"no-cond-assign": "off",
 			"no-console": "off",
 			"no-empty": "off",
