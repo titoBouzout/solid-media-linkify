@@ -1,4 +1,5 @@
 import { createMutable } from 'solid-js/store'
+import { createSignal } from 'solid-js'
 
 import Video from './media/video.js'
 import Audio from './media/audio.js'
@@ -15,12 +16,16 @@ function toObjectURL(url) {
 	return link
 }
 
-async function toMediaLink(url, link, scroll) {
-	try {
-		let res = await fetch(url, { method: 'HEAD' })
-		let contentType = res.headers.get('Content-Type')
-		link.url = <Media url={url} scroll={scroll} type={contentType} />
-	} catch (e) {}
+async function toMediaLink(url, scroll) {
+	let res = await fetch(url, { method: 'HEAD' })
+	let contentType = res.headers.get('Content-Type')
+	return <Media url={url} scroll={scroll} type={contentType} />
+}
+
+function fallback(fallback, promise) {
+	const [message, setMessage] = createSignal(fallback)
+	promise.then(r => r !== undefined && setMessage(r))
+	return message
 }
 
 export default function Media(props) {
@@ -45,11 +50,12 @@ export default function Media(props) {
 		return <Image url={url} scroll={props.scroll} />
 	} else if (props.type) {
 		// if type is set, then we already tried to figure out the type, do nothing
+	} else if (props.guessType && /^[^/]+\/\/[^/]+\/.+/.test(url)) {
+		// do not guess type of links without paths
+		// display a link as fallback
+		// try to guess the type by doing fetch
+		return fallback(<Link url={url} />, toMediaLink(url, props.scroll))
 	} else {
-		// try to guess the type
-		let link = createMutable({ url })
-		link.url = <Link url={url} />
-		toMediaLink(url, link, props.scroll)
-		return () => link.url
+		return <Link url={url} />
 	}
 }

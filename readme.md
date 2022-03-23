@@ -22,11 +22,18 @@ export default function YourComponent() {
 			scroll={() => {
 				console.log(`
 					if you need to scroll something
-					after a image/audio/video loads
+					after a image/audio/video is displayed
 					you can use this
 				`)
 			}}
 			mark="will"
+			// some links, like https://avatars.githubusercontent.com/u/64156?s=60&v=4
+			// are images, but theres no indicator on the link itself that its an image
+			// for that reason you may want to sniff the links for the contentType
+			// this attribute allows to sniff the link using a fetch HEAD request
+			// defaults to false
+			guessType={true}
+			emoji={true}
 		/>
 	)
 }
@@ -78,6 +85,7 @@ As is, does the job on my sites. However, there some pending stuff
 - allow to extend the emoji with images, like `:tito:` to become something else
 - allow mark to be an array
 - may do children recursive
+- allow to pass a proxy url for embeds, to not leak ips
 
 Possibly new functionalities.
 

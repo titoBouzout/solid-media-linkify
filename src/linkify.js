@@ -8,10 +8,8 @@ const separator = /(\s+)/
 export default function Linkify(props) {
 	let scroll = props.scroll || noop
 	let mark = props.mark ? props.mark.toLowerCase() : false
-	let nodes = []
 
 	let s = []
-
 	if (typeof props.children === 'string') {
 		s = (props.children || '').trim().split(separator)
 	} else {
@@ -24,12 +22,13 @@ export default function Linkify(props) {
 		})
 	}
 
+	let nodes = []
 	for (let i = 0, l = s.length; i < l; i++) {
 		isEmoji.lastIndex = 0
 
 		if (typeof s[i] !== 'string') {
 			nodes.push(s[i])
-		} else if (Emoji[s[i]]) {
+		} else if (props.emoji && Emoji[s[i]]) {
 			// :duck: to <span class="emoji-native">🦆</span>
 			// 🦆 to <span class="emoji-native">🦆</span>
 			nodes.push(<span class="emoji-native">{Emoji[s[i]]}</span>)
@@ -43,10 +42,10 @@ export default function Linkify(props) {
 			s[i] != 'blob:' &&
 			s[i] != 'data:'
 		) {
-			nodes.push(<Media url={s[i]} scroll={scroll} />)
+			nodes.push(<Media url={s[i]} scroll={scroll} guessType={props.guessType} />)
 		} else if (mark !== false && mark === s[i].toLowerCase()) {
 			nodes.push(<mark>{s[i]}</mark>)
-		} else if (!/[a-z0-9&*#]/i.test(s[i]) && isEmoji.test(s[i])) {
+		} else if (props.emoji && !/[a-z0-9&*#]/i.test(s[i]) && isEmoji.test(s[i])) {
 			// _unkown emoji_ to <span class="emoji-native">_unkown emoji_</span>
 			nodes.push(<span class="emoji-native">{s[i]}</span>)
 		} else if (typeof nodes[nodes.length - 1] === 'string') {
