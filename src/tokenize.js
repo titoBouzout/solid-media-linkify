@@ -34,7 +34,10 @@ const spoilerRemove = e => {
 	e.currentTarget.style.color = 'inherit'
 }
 const spoiler = s => <spoiler onClick={spoilerRemove}>{s}</spoiler>
-const code = s => <code>`{s}`</code>
+const noop = () => {}
+const code = s => (
+	<code onClick={() => navigator.clipboard.writeText(s).then(noop).catch(noop)}>`{s}`</code>
+)
 
 let tags = {
 	'*': (s, i, buffer, pieces) => token({ name: '*', wrap: bold }, s, i, buffer, pieces),
