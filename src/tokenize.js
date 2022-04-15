@@ -6,7 +6,7 @@ export default function tokenize(s) {
 
 	for (let i = 0; i < s.length; i++) {
 		// search for an opening tag
-		if (s[i] === ' ' && tags[s[i + 1]]) {
+		if (/\s/.test(s[i]) && tags[s[i + 1]]) {
 			// search for the closing tag
 			let newI = tags[s[i + 1]](s, i, buffer, pieces)
 			if (i !== newI) {
@@ -50,7 +50,7 @@ function token(tag, s, i, buffer, pieces) {
 	let newBuffer = s[i] //  + s[i + 1] skip opening tag
 	let didEnd = false
 	for (i += 2; i < s.length; i++) {
-		if (s[i] === tag.name && s[i + 1] === ' ') {
+		if (s[i] === tag.name && /\s/.test(s[i + 1])) {
 			didEnd = true
 			break
 		}
