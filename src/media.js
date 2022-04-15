@@ -1,5 +1,5 @@
 import { createMutable } from 'solid-js/store'
-import { createSignal } from 'solid-js'
+import PromisedComponent from './promised-component'
 
 import Video from './media/video.js'
 import Audio from './media/audio.js'
@@ -20,12 +20,6 @@ async function toMediaLink(url, scroll) {
 	let res = await fetch(url, { method: 'HEAD' })
 	let contentType = res.headers.get('Content-Type')
 	return <Media url={url} scroll={scroll} type={contentType} />
-}
-
-function fallback(fallback, promise) {
-	const [message, setMessage] = createSignal(fallback)
-	promise.then(r => r !== undefined && setMessage(r))
-	return message
 }
 
 export default function Media(props) {
@@ -54,7 +48,7 @@ export default function Media(props) {
 		// do not guess type of links without paths
 		// display a link as fallback
 		// try to guess the type by doing fetch
-		return fallback(<Link url={url} />, toMediaLink(url, props.scroll))
+		return PromisedComponent(toMediaLink(url, props.scroll), <Link url={url} />)
 	} else {
 		return <Link url={url} />
 	}
