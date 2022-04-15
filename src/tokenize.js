@@ -29,7 +29,11 @@ const bold = s => <b>{s}</b>
 const italic = s => <em>{s}</em>
 const underline = s => <u>{s}</u>
 const stroke = s => <s>{s}</s>
-const spoiler = s => <spoiler>{s}</spoiler>
+const spoilerRemove = e => {
+	e.currentTarget.style.backgroundColor = 'inherit'
+	e.currentTarget.style.color = 'inherit'
+}
+const spoiler = s => <spoiler onClick={spoilerRemove}>{s}</spoiler>
 const code = s => <code>`{s}`</code>
 
 let tags = {
