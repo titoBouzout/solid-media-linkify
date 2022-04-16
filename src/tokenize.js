@@ -1,3 +1,30 @@
+const text = s => s
+const bold = s => <b>{s}</b>
+const italic = s => <em>{s}</em>
+const underline = s => <u>{s}</u>
+const stroke = s => <s>{s}</s>
+const spoilerRemove = e => {
+	e.currentTarget.style.backgroundColor = 'inherit'
+	e.currentTarget.style.color = 'inherit'
+}
+const spoiler = s => <spoiler onClick={spoilerRemove}>{s}</spoiler>
+const noop = () => {}
+const code = s => (
+	<>
+		{' '}
+		<code onClick={() => navigator.clipboard.writeText(s).then(noop).catch(noop)}>`{s}`</code>
+	</>
+)
+
+let tags = {
+	'*': (s, i, buffer, pieces) => token({ name: '*', wrap: bold }, s, i, buffer, pieces),
+	'/': (s, i, buffer, pieces) => token({ name: '/', wrap: italic }, s, i, buffer, pieces),
+	'_': (s, i, buffer, pieces) => token({ name: '_', wrap: underline }, s, i, buffer, pieces),
+	'-': (s, i, buffer, pieces) => token({ name: '-', wrap: stroke }, s, i, buffer, pieces),
+	'|': (s, i, buffer, pieces) => token({ name: '|', wrap: spoiler }, s, i, buffer, pieces),
+	'`': (s, i, buffer, pieces) => token({ name: '`', wrap: code }, s, i, buffer, pieces),
+}
+
 export default function tokenize(s) {
 	s = ' ' + (s || '').trim()
 
@@ -16,7 +43,10 @@ export default function tokenize(s) {
 			i = newI
 		}
 
-		buffer.data += s[i]
+		if (s[i] === '\\' && /\s/.test(s[i - 1]) && tags[s[i + 1]]) {
+		} else {
+			buffer.data += s[i]
+		}
 	}
 	if (buffer.data !== '') pieces.push({ s: buffer.data, name: 'text', wrap: text })
 
@@ -24,33 +54,11 @@ export default function tokenize(s) {
 	pieces[0].s = pieces[0].s.trimStart()
 	return pieces
 }
-const text = s => s
-const bold = s => <b>{s}</b>
-const italic = s => <em>{s}</em>
-const underline = s => <u>{s}</u>
-const stroke = s => <s>{s}</s>
-const spoilerRemove = e => {
-	e.currentTarget.style.backgroundColor = 'inherit'
-	e.currentTarget.style.color = 'inherit'
-}
-const spoiler = s => <spoiler onClick={spoilerRemove}>{s}</spoiler>
-const noop = () => {}
-const code = s => (
-	<code onClick={() => navigator.clipboard.writeText(s).then(noop).catch(noop)}>`{s}`</code>
-)
-
-let tags = {
-	'*': (s, i, buffer, pieces) => token({ name: '*', wrap: bold }, s, i, buffer, pieces),
-	'/': (s, i, buffer, pieces) => token({ name: '/', wrap: italic }, s, i, buffer, pieces),
-	'_': (s, i, buffer, pieces) => token({ name: '_', wrap: underline }, s, i, buffer, pieces),
-	'-': (s, i, buffer, pieces) => token({ name: '-', wrap: stroke }, s, i, buffer, pieces),
-	'|': (s, i, buffer, pieces) => token({ name: '|', wrap: spoiler }, s, i, buffer, pieces),
-	'`': (s, i, buffer, pieces) => token({ name: '`', wrap: code }, s, i, buffer, pieces),
-}
 
 function token(tag, s, i, buffer, pieces) {
 	let oldi = i
-	let newBuffer = s[i] //  + s[i + 1] skip opening tag
+	// skip the code tag because displays the whitespace
+	let newBuffer = tag.name !== '`' ? s[i] : '' //  + s[i + 1] skip opening tag
 	let didEnd = false
 	for (i += 2; i < s.length; i++) {
 		if (s[i] === tag.name && /\s/.test(s[i + 1])) {
