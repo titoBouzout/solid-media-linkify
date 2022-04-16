@@ -10,10 +10,7 @@ const spoilerRemove = e => {
 const spoiler = s => <spoiler onClick={spoilerRemove}>{s}</spoiler>
 const noop = () => {}
 const code = s => (
-	<>
-		{' '}
-		<code onClick={() => navigator.clipboard.writeText(s).then(noop).catch(noop)}>`{s}`</code>
-	</>
+	<code onClick={() => navigator.clipboard.writeText(s).then(noop).catch(noop)}>`{s}`</code>
 )
 
 let tags = {
@@ -34,8 +31,10 @@ export default function tokenize(s) {
 	for (let i = 0; i < s.length; i++) {
 		// search for an opening tag
 		if (/\s/.test(s[i]) && tags[s[i + 1]]) {
+			buffer.data += s[i]
+
 			// search for the closing tag
-			let newI = tags[s[i + 1]](s, i, buffer, pieces)
+			let newI = tags[s[i + 1]](s, i + 1, buffer, pieces)
 			if (i !== newI) {
 				i = newI
 				continue
@@ -57,10 +56,9 @@ export default function tokenize(s) {
 
 function token(tag, s, i, buffer, pieces) {
 	let oldi = i
-	// skip the code tag because displays the whitespace
-	let newBuffer = tag.name !== '`' ? s[i] : '' //  + s[i + 1] skip opening tag
+	let newBuffer = ''
 	let didEnd = false
-	for (i += 2; i < s.length; i++) {
+	for (i += 1; i < s.length; i++) {
 		if (s[i] === tag.name && /\s/.test(s[i + 1])) {
 			didEnd = true
 			break
