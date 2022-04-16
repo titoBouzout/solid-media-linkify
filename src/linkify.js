@@ -35,7 +35,7 @@ export default function Linkify(props) {
 			if (props.emoji && Emoji[s[i]]) {
 				// :duck: to <span class="emoji-native">🦆</span>
 				// 🦆 to <span class="emoji-native">🦆</span>
-				node.push(<emoji>{Emoji[s[i]]}</emoji>)
+				node.push(<emoji>{s[i][0] === '#' ? s[i] + ' ' + Emoji[s[i]] : Emoji[s[i]]}</emoji>)
 			} else if (
 				(s[i].indexOf('http://') === 0 ||
 					s[i].indexOf('https://') === 0 ||
