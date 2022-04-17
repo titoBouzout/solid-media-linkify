@@ -13,13 +13,29 @@ const code = s => (
 	<code onClick={() => navigator.clipboard.writeText(s).then(noop).catch(noop)}>`{s}`</code>
 )
 
-let tags = {
-	'*': (s, i, buffer, pieces) => token({ name: '*', wrap: bold }, s, i, buffer, pieces),
-	'/': (s, i, buffer, pieces) => token({ name: '/', wrap: italic }, s, i, buffer, pieces),
-	'_': (s, i, buffer, pieces) => token({ name: '_', wrap: underline }, s, i, buffer, pieces),
-	'-': (s, i, buffer, pieces) => token({ name: '-', wrap: stroke }, s, i, buffer, pieces),
-	'|': (s, i, buffer, pieces) => token({ name: '|', wrap: spoiler }, s, i, buffer, pieces),
-	'`': (s, i, buffer, pieces) => token({ name: '`', wrap: code }, s, i, buffer, pieces),
+const tags = {
+	'*': (s, i, buffer, pieces) => tokenEnd({ name: '*', wrap: bold }, s, i, buffer, pieces),
+	'/': (s, i, buffer, pieces) => tokenEnd({ name: '/', wrap: italic }, s, i, buffer, pieces),
+	'_': (s, i, buffer, pieces) => tokenEnd({ name: '_', wrap: underline }, s, i, buffer, pieces),
+	'-': (s, i, buffer, pieces) => tokenEnd({ name: '-', wrap: stroke }, s, i, buffer, pieces),
+	'|': (s, i, buffer, pieces) => tokenEnd({ name: '|', wrap: spoiler }, s, i, buffer, pieces),
+	'`': (s, i, buffer, pieces) => tokenEnd({ name: '`', wrap: code }, s, i, buffer, pieces),
+}
+
+const punctuationEnd = (char, string, i) => {
+	switch (char) {
+		case '?':
+		case '!':
+		case '.':
+		case ',':
+		case ']':
+		case ')':
+		case '"':
+		case "'":
+			return true
+		default:
+			return /\s/.test(char)
+	}
 }
 
 export default function tokenize(s) {
@@ -49,17 +65,17 @@ export default function tokenize(s) {
 	}
 	if (buffer.data !== '') pieces.push({ s: buffer.data, name: 'text', wrap: text })
 
-	// undo added char to facilitate parsing
+	// undo the added whitespace to facilitate parsing
 	pieces[0].s = pieces[0].s.trimStart()
 	return pieces
 }
 
-function token(tag, s, i, buffer, pieces) {
+function tokenEnd(tag, s, i, buffer, pieces) {
 	let oldi = i
 	let newBuffer = ''
 	let didEnd = false
 	for (i += 1; i < s.length; i++) {
-		if (s[i] === tag.name && /\s/.test(s[i + 1])) {
+		if (s[i] === tag.name && punctuationEnd(s[i + 1], s, i)) {
 			didEnd = true
 			break
 		}
@@ -74,6 +90,7 @@ function token(tag, s, i, buffer, pieces) {
 		buffer.data = ''
 		pieces.push({ s: newBuffer, name: tag.name, wrap: tag.wrap })
 	} else {
+		// need to un-eat the char when the closing tag was not found, thanks to @boredofnames
 		i = oldi - 1
 	}
 	return i
