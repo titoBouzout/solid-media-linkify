@@ -22,7 +22,22 @@ const tags = {
 	'`': (s, i, buffer, pieces) => tokenEnd({ name: '`', wrap: code }, s, i, buffer, pieces),
 }
 
-const punctuationEnd = (char, string, i) => {
+function punctuationStart(char, s, i) {
+	switch (char) {
+		case '"':
+		case "'":
+		case '[':
+		case '(':
+		case '{':
+		case '¡':
+		case '¿':
+			return /\s/.test(s[i - 1])
+		default:
+			return /\s/.test(char)
+	}
+}
+
+function punctuationEnd(char, s, i) {
 	switch (char) {
 		case '?':
 		case '!':
@@ -30,15 +45,20 @@ const punctuationEnd = (char, string, i) => {
 		case ',':
 		case ']':
 		case ')':
+		case '}':
+
 		case '"':
 		case "'":
-			return true
+			// end of string or followed by whitespace
+			return i + 2 === s.length || /\s/.test(s[i + 2])
 		default:
-			return /\s/.test(char)
+			// end of string or is whitespace
+			return i + 1 === s.length || /\s/.test(char)
 	}
 }
 
 export default function tokenize(s) {
+	// to facilitate parsing add a whitespace at the start
 	s = ' ' + (s || '').trim()
 
 	let pieces = []
@@ -46,10 +66,9 @@ export default function tokenize(s) {
 
 	for (let i = 0; i < s.length; i++) {
 		// search for an opening tag
-		if (/\s/.test(s[i]) && tags[s[i + 1]]) {
-			buffer.data += s[i]
-
-			// search for the closing tag
+		if (tags[s[i + 1]] && punctuationStart(s[i], s, i)) {
+			buffer.data += s[i] // use the whitespace
+			// search for the closing tag, i + 1 in the argument to skip the whitespace
 			let newI = tags[s[i + 1]](s, i + 1, buffer, pieces)
 			if (i !== newI) {
 				i = newI
@@ -58,35 +77,39 @@ export default function tokenize(s) {
 			i = newI
 		}
 
-		if (s[i] === '\\' && /\s/.test(s[i - 1]) && tags[s[i + 1]]) {
-		} else {
+		// remove the escape char, i - 1 in the argument to skip the punctuation
+		if (!(s[i] === '\\' && tags[s[i + 1]] && punctuationStart(s[i - 1], s, i - 1))) {
 			buffer.data += s[i]
 		}
 	}
-	if (buffer.data !== '') pieces.push({ s: buffer.data, name: 'text', wrap: text })
+	if (buffer.data !== '') {
+		pieces.push({ s: buffer.data, name: 'text', wrap: text })
+	}
 
 	// undo the added whitespace to facilitate parsing
 	pieces[0].s = pieces[0].s.trimStart()
+	if (pieces[0].s === '') {
+		pieces.shift()
+	}
 	return pieces
 }
 
 function tokenEnd(tag, s, i, buffer, pieces) {
 	let oldi = i
 	let newBuffer = ''
-	let didEnd = false
+	let found = false
+	// i += 1 to skip the opening tag
 	for (i += 1; i < s.length; i++) {
 		if (s[i] === tag.name && punctuationEnd(s[i + 1], s, i)) {
-			didEnd = true
+			found = true
 			break
 		}
-		// skip the closing tag
-		if (i === s.length - 1 && s[i] === tag.name) {
-		} else {
-			newBuffer += s[i]
-		}
+		newBuffer += s[i]
 	}
-	if (didEnd || (i === s.length && s[i - 1] === tag.name)) {
-		if (buffer.data !== '') pieces.push({ s: buffer.data, name: 'text', wrap: text })
+	if (found) {
+		if (buffer.data !== '') {
+			pieces.push({ s: buffer.data, name: 'text', wrap: text })
+		}
 		buffer.data = ''
 		pieces.push({ s: newBuffer, name: tag.name, wrap: tag.wrap })
 	} else {
