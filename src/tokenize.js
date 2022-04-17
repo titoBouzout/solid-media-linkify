@@ -74,7 +74,7 @@ function token(tag, s, i, buffer, pieces) {
 		buffer.data = ''
 		pieces.push({ s: newBuffer, name: tag.name, wrap: tag.wrap })
 	} else {
-		i = oldi
+		i = oldi - 1
 	}
 	return i
 }
