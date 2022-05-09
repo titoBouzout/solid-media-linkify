@@ -62,5 +62,5 @@ export default function Linkify(props) {
 		nodes.push(token.wrap(node))
 	}
 
-	return quote(italic(nodes))
+	return <>quote(italic(nodes))</>
 }
