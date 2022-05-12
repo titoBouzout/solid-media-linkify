@@ -1,6 +1,6 @@
 {
 	"name": "solid-media-linkify",
-	"version": "3.0.30",
+	"version": "3.0.31",
 	"description": "Given a string it returns links, images, videos, audio as tags and also emojis like :duck: as 🦆.",
 	"main": "index.js",
 	"repository": {
