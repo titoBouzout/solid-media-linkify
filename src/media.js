@@ -17,7 +17,7 @@ function toObjectURL(url) {
 }
 
 async function toMediaLink(url, scroll) {
-	let res = await fetch(url, { method: 'HEAD' })
+	let res = await fetch(url, { method: url.indexOf('blob:') === 0 ? 'GET' : 'HEAD' })
 	let contentType = res.headers.get('Content-Type')
 	return <Media url={url} scroll={scroll} type={contentType} />
 }
