@@ -13,14 +13,14 @@ const code = s => (
 	<code onClick={() => navigator.clipboard.writeText(s).then(noop).catch(noop)}>`{s}`</code>
 )
 
+// s = string, i = position, b = buffer, p = pieces, w = whitespace
 const tags = {
-	'*': (s, i, buffer, pieces, w) => tokenEnd({ name: '*', wrap: bold }, s, i, buffer, pieces, w),
-	'/': (s, i, buffer, pieces, w) => tokenEnd({ name: '/', wrap: italic }, s, i, buffer, pieces, w),
-	'_': (s, i, buffer, pieces, w) =>
-		tokenEnd({ name: '_', wrap: underline }, s, i, buffer, pieces, w),
-	'-': (s, i, buffer, pieces, w) => tokenEnd({ name: '-', wrap: stroke }, s, i, buffer, pieces, w),
-	'|': (s, i, buffer, pieces, w) => tokenEnd({ name: '|', wrap: spoiler }, s, i, buffer, pieces, w),
-	'`': (s, i, buffer, pieces, w) => tokenEnd({ name: '`', wrap: code }, s, i, buffer, pieces, w),
+	'*': (s, i, b, p, w) => tokenEnd({ name: '*', wrap: bold, nLine: 0 }, s, i, b, p, w),
+	'/': (s, i, b, p, w) => tokenEnd({ name: '/', wrap: italic, nLine: 1 }, s, i, b, p, w),
+	'_': (s, i, b, p, w) => tokenEnd({ name: '_', wrap: underline, nLine: 1 }, s, i, b, p, w),
+	'-': (s, i, b, p, w) => tokenEnd({ name: '-', wrap: stroke, nLine: 0 }, s, i, b, p, w),
+	'|': (s, i, b, p, w) => tokenEnd({ name: '|', wrap: spoiler, nLine: 1 }, s, i, b, p, w),
+	'`': (s, i, b, p, w) => tokenEnd({ name: '`', wrap: code, nLine: 1 }, s, i, b, p, w),
 }
 
 function punctuationStart(char, s, i) {
@@ -102,7 +102,7 @@ function tokenEnd(tag, s, i, buffer, pieces, whitespace) {
 		if (s[i] === tag.name && punctuationEnd(s[i + 1], s, i)) {
 			found = true
 			break
-		} else if (s[i] === '\n') {
+		} else if (!tag.nLine && s[i] === '\n') {
 			break
 		}
 		newBuffer += s[i]
