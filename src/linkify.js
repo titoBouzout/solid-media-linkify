@@ -10,7 +10,16 @@ export default function Linkify(props) {
 	let scroll = props.scroll || noop
 	let mark = props.mark ? props.mark.toLowerCase() : false
 
-	let s = (props.text || '').trim()
+	let s
+	if (!props.trim) {
+		s = (props.text || '').trim()
+	} else {
+		s = (props.text || '')
+			.split('\n')
+			.map(m => m.trim())
+			.join('\n')
+			.trim()
+	}
 
 	let quote = s => s
 	let italic = s => s

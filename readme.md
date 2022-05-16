@@ -47,6 +47,7 @@ export default function YourComponent() {
 			// defaults to false
 			guessType={true}
 			emoji={true}
+			trim={true}
 		/>
 	)
 }
@@ -60,14 +61,22 @@ export default function YourComponent() {
 
 Splits the text in white-spaces and then checks for http/https/data to create the Tags. There's no injection, these are real tags without any risky innerHTML. It has a very small parser for the text formatting.
 
+## Options
+
+| attribute   | description                                                                                           |
+| ----------- | ----------------------------------------------------------------------------------------------------- |
+| `text`      | the text to format                                                                                    |
+| `scroll`    | pass a function to run after an audio/video/image                                                     |
+| `mark`      | wraps the text passed in a `<mark/>` tag (case insensitive)                                           |
+| `guessType` | sniff unrecognized links via a `HEAD` request to ensure correct media type (image should be image)    |
+| `emoji`     | wraps emojis in a tag named `<emoji/>`                                                                |
+| `trim`      | trims each line of the text. Handy for when formatting the attribute with backstick with indentatnion |
+
 ## Functionality
 
 - supported images: (png|apng|jpg|jpeg|gif|svg|webp)
 - supported audio: (wav|mp3|m4a|ogg|oga|opus)
 - supported video: (webm|mp4|mpg|ogv)
-- Emojis are wrapped in as `<emoji>🦆</emoji>` in case you want to display them bigger.
-- You may pass a `scroll` prop function, to be able to scroll(a chat?) after an image/video/audio is visible.
-- You may pass a `mark` text. `mark="Tito"` will become `<mark>Tito</mark>`, it's case insensitive
 - links contain `rel="noopener"`
 - external links open in `_blank`
 - `alt` and `title` contain the URL
@@ -75,8 +84,7 @@ Splits the text in white-spaces and then checks for http/https/data to create th
 - clean ",. from the end of links and embeds
 - always open internal images and videos links on new tabs
 - converts data urls to blob urls
-- provides simple formatting for bold, italic, stroke, underline, code, spoiler
-- some images/videos/adios don't give any indication of what they are in the url, we do a HEAD request to try to figure it out when guessType is true.
+- provides simple formatting for bold, italic, stroke, underline, code, spoiler and quote
 
 ## TODO
 
